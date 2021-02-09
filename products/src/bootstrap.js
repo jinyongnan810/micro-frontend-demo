@@ -1,11 +1,21 @@
 import faker from "faker";
-let productsList = [];
-const productsEl = document.getElementById("dev-products");
+const mount = (el) => {
+  let productsList = [];
 
-for (let i = 0; i < 10; i++) {
-  productsList.push({ name: faker.commerce.productName() });
+  for (let i = 0; i < 10; i++) {
+    productsList.push({ name: faker.commerce.productName() });
+  }
+
+  const ps = productsList.map((p) => `<div>${p.name}</div>`).join("");
+
+  el.innerHTML = ps;
+};
+
+if (process.env.NODE_ENV === "development") {
+  const productsEl = document.getElementById("dev-products-for-isolation");
+  if (productsEl) {
+    mount(productsEl);
+  }
 }
 
-const ps = productsList.map((p) => `<div>${p.name}</div>`).join("");
-
-productsEl.innerHTML = ps;
+export { mount };

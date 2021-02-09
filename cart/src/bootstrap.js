@@ -1,4 +1,14 @@
 import faker from "faker";
 const cartEl = document.getElementById("dev-cart");
 
-cartEl.innerHTML = `<h1>You have ${faker.random.number()} items in your cart</h1>`;
+const mount = (el) => {
+  el.innerHTML = `<h1>You have ${faker.random.number()} items in your cart</h1>`;
+};
+if (process.env.NODE_ENV === "development") {
+  const cartEl = document.getElementById("dev-cart-for-isolation");
+  if (cartEl) {
+    mount(cartEl);
+  }
+}
+
+export { mount };
